@@ -1,7 +1,8 @@
+from flask import Response
 from kubernetes import client
 
 from .. import authz
-from . import custom_api
+from . import custom_api, watch
 
 
 def create_custom_rsrc(group, version, kind, data, namespace):
@@ -32,3 +33,12 @@ def get_custom_rsrc(group, version, kind, namespace, name):
 
     return custom_api.get_namespaced_custom_object(group, version, namespace,
                                                    kind, name)
+
+
+def watch_custom_rsrc(group, version, kind, namespace):
+    authz.ensure_authorized("list", group, version, kind, namespace)
+
+    list_fn = custom_api.list_namespaced_custom_object
+    sse_stream = watch.cr_list_sse(list_fn, group, version, namespace, kind)
+
+    return Response(sse_stream, mimetype="text/event-stream")

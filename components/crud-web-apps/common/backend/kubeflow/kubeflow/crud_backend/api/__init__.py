@@ -1,3 +1,4 @@
+from . import watch  # noqa F401, F403
 from .apis import *  # noqa F401, F403
 from .custom_resource import *  # noqa F401, F403
 from .namespace import *  # noqa F401, F403

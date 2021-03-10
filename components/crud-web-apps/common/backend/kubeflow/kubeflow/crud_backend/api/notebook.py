@@ -1,7 +1,8 @@
+from flask import Response
 from kubernetes import client
 
 from .. import authz
-from . import custom_api, v1_core
+from . import custom_api, v1_core, watch
 
 
 def get_notebook(notebook, namespace):
@@ -61,3 +62,15 @@ def list_notebook_events(notebook, namespace):
     return v1_core.list_namespaced_event(
         namespace=namespace, field_selector=selector
     )
+
+
+def watch_notebooks(namespace):
+    authz.ensure_authorized(
+        "list", "kubeflow.org", "v1beta1", "notebooks", namespace
+    )
+
+    list_fn = custom_api.list_namespaced_custom_object
+    sse_stream = watch.cr_list_sse("notebooks", list_fn, "kubeflow.org",
+                                   "v1beta1", namespace, "notebooks")
+
+    return Response(sse_stream, mimetype="text/event-stream")
