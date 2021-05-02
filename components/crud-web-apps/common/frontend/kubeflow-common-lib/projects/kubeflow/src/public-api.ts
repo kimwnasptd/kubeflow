@@ -7,6 +7,7 @@ export * from './lib/kubeflow.module';
 export * from './lib/snack-bar/snack-bar.module';
 export * from './lib/snack-bar/snack-bar.service';
 
+export * from './lib/services/watch.service';
 export * from './lib/services/namespace.service';
 export * from './lib/services/backend/backend.service';
 export * from './lib/services/rok/rok.service';
@@ -58,6 +59,9 @@ export * from './lib/form/utils';
 export * from './lib/form/error-state-matcher';
 
 export * from './lib/enums/dashboard';
+export * from './lib/enums/watch';
+
+export * from './lib/models/watch';
 
 export * from './lib/utils/kubernetes';
 export * from './lib/utils/kubernetes.model';
