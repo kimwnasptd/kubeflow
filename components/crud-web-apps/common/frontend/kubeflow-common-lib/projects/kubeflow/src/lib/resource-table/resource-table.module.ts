@@ -8,6 +8,7 @@ import {
   MatButtonModule,
   MatMenuModule,
   MatIconModule,
+  MatPaginatorModule,
 } from '@angular/material';
 import { StatusComponent } from './status/status.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -35,6 +36,7 @@ import { PortalModule } from '@angular/cdk/portal';
     MatButtonModule,
     MatChipsModule,
     MatMenuModule,
+    MatPaginatorModule,
     PortalModule,
     FontAwesomeModule,
     MatIconModule,
