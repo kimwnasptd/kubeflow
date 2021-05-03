@@ -1,30 +1,55 @@
-$row-right-padding: 28px;
+$row-padding: 16px;
+
+:host {
+  display: block;
+}
 
 .grey {
   background-color: rgb(245, 245, 245);
 }
 
 .row-right-padding {
-  padding-right: $row-right-padding;
+  padding-right: $row-padding;
 }
 
 tr th.right-align {
   text-align: right;
 }
 
+// Add left padding to the next left-aligned column that
+// comes after a right aligned column. This applies to
+// both the header and and the row
+tr th.right-align + th:not(.right-align) {
+  padding-left: $row-padding;
+}
+
+tr td.right-align + td:not(.right-align) {
+  padding-left: $row-padding;
+}
+
 .action-list {
   display: flex;
+  width: fit-content;
+  margin: auto 0 auto auto;
 }
 
 .action-button {
-  margin: auto;
+  margin: auto 0.2rem;
+}
+
+.header-padding {
+  padding-right: $row-padding;
+}
+
+.mat-cell-truncate {
+  max-width: 20px;
 }
 
 .mat-cell {
   min-height: auto;
   padding-top: 2px;
   padding-bottom: 2px;
-  padding-right: $row-right-padding;
+  padding-right: $row-padding;
 }
 
 .mat-row:hover {
@@ -39,18 +64,6 @@ tr th.right-align {
   text-decoration: underline;
   color: blue;
   cursor: pointer;
-}
-
-.text-small {
-  max-width: 150px;
-}
-
-.text-medium {
-  max-width: 300px;
-}
-
-.text-large {
-  max-width: 450px;
 }
 
 lib-action {

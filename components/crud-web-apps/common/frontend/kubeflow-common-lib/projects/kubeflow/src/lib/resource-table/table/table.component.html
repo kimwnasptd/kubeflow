@@ -9,7 +9,7 @@
       [ngClass]="{
         grey: tableTheme === TABLE_THEME.FLAT,
         'right-align': col.textAlignment === 'right',
-        'row-right-padding': col.textAlignment === 'right'
+        'header-padding': true
       }"
     >
       {{ col.matHeaderCellDef }}
@@ -20,16 +20,17 @@
       <td
         mat-cell
         *matCellDef="let element"
-        [ngStyle]="{ 'min-width': col.minWidth, width: col.width }"
+        [ngStyle]="col.style"
         [ngClass]="{
           'right-align': col.textAlignment === 'right',
-          'row-right-padding': col.textAlignment === 'right'
+          'mat-cell-truncate': col.value.truncate
         }"
       >
         <div
           [matTooltip]="col.value.getTooltip(element)"
           [libPopover]="col.value.getPopover(element)"
           matTooltipClass="custom-tooltip"
+          [ngStyle]="col.value.style"
           [ngClass]="col.value.getClasses()"
           (click)="linkClicked(col.matColumnDef, element)"
         >
@@ -40,11 +41,7 @@
 
     <!--Status Value-->
     <ng-container *ngIf="isStatusValue(col.value)">
-      <td
-        mat-cell
-        *matCellDef="let element"
-        [ngStyle]="{ 'min-width': col.minWidth, width: col.width }"
-      >
+      <td mat-cell *matCellDef="let element" [ngStyle]="col.style">
         <lib-status [row]="element" [config]="col.value"></lib-status>
       </td>
     </ng-container>
@@ -54,7 +51,8 @@
       <td
         mat-cell
         *matCellDef="let element"
-        [ngStyle]="{ 'min-width': col.minWidth, width: col.width }"
+        [ngStyle]="col.style"
+        [ngClass]="{ 'right-align': col.textAlignment === 'right' }"
       >
         <lib-date-time [date]="col.value.getValue(element)"></lib-date-time>
       </td>
@@ -65,8 +63,8 @@
       <td
         mat-cell
         *matCellDef="let element"
-        [ngStyle]="{ 'min-width': col.minWidth, width: col.width }"
-        [ngClass]="{ 'right-align': col.rightAlign }"
+        [ngStyle]="col.style"
+        [ngClass]="{ 'right-align': col.textAlignment === 'right' }"
       >
         <lib-component-value
           [element]="element"
@@ -80,7 +78,7 @@
       <td
         mat-cell
         *matCellDef="let element"
-        [ngStyle]="{ 'min-width': col.minWidth, width: col.width }"
+        [ngStyle]="col.style"
         [ngClass]="{
           'right-align': col.textAlignment === 'right',
           'row-right-padding': col.textAlignment === 'right'
@@ -95,11 +93,7 @@
 
     <!--Chips List Value-->
     <ng-container *ngIf="isChipsListValue(col.value)">
-      <td
-        mat-cell
-        *matCellDef="let element"
-        [ngStyle]="{ 'min-width': col.minWidth, width: col.width }"
-      >
+      <td mat-cell *matCellDef="let element" [ngStyle]="col.style">
         <lib-table-chips-list
           [element]="element"
           [valueDescriptor]="col.value"
@@ -109,11 +103,7 @@
 
     <!--Menu Value-->
     <ng-container *ngIf="isMenuValue(col.value)">
-      <td
-        mat-cell
-        *matCellDef="let element"
-        [ngStyle]="{ 'min-width': col.minWidth, width: col.width }"
-      >
+      <td mat-cell *matCellDef="let element" [ngStyle]="col.style">
         <button mat-icon-button [matMenuTriggerFor]="menu">
           <mat-icon>{{ col.value.menuIcon }}</mat-icon>
         </button>
@@ -149,6 +139,7 @@
             <!--Icon-->
             <lib-action
               *ngIf="isActionIconValue(action)"
+              class="action-button"
               [action]="action"
               [data]="element"
               (emitter)="actionTriggered($event)"
