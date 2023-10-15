@@ -10,8 +10,8 @@ on:
       - releasing/version/VERSION
 
 env:
-  DOCKER_USER: kubeflownotebookswg
-  IMG: kubeflownotebookswg/notebook-controller
+  DOCKER_USER: kimwnasptd
+  IMG: kimwnasptd/notebook-controller
   ARCH: linux/amd64,linux/ppc64le,linux/arm64/v8
 
 jobs:
