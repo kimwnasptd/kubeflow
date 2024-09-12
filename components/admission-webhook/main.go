@@ -26,6 +26,7 @@ import (
 	"reflect"
 	"strings"
 
+	"github.com/davecgh/go-spew/spew"
 	settingsapi "github.com/kubeflow/kubeflow/components/admission-webhook/pkg/apis/settings/v1alpha1"
 	"github.com/mattbaird/jsonpatch"
 	"k8s.io/api/admission/v1"
@@ -577,7 +578,7 @@ func applyPodDefaultsOnContainer(ctr *corev1.Container, podDefaults []*settingsa
 	setCommandAndArgs(ctr, podDefaults)
 }
 
-//setCommandAndArgs adds command and args to the provided container. If the container already has a command or arguments set,
+// setCommandAndArgs adds command and args to the provided container. If the container already has a command or arguments set,
 // they won't be overwritten by PodDefault.
 func setCommandAndArgs(ctr *corev1.Container, podDefaults []*settingsapi.PodDefault) {
 	// ignore istio sidecar container
@@ -611,6 +612,10 @@ func mutatePods(ar v1.AdmissionReview) *v1.AdmissionResponse {
 		klog.Error(err)
 		return toAdmissionResponse(err)
 	}
+
+	klog.Infof("Mutate request: %v", spew.Sprint(ar.Request))
+	klog.Infof("Converted pod: %v", spew.Sprint(pod))
+
 	reviewResponse := v1.AdmissionResponse{}
 	reviewResponse.Allowed = true
 	if pod.Namespace == "" {
