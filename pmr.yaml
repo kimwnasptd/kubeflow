@@ -18,11 +18,5 @@ profiles:
     kind: user
     name: admin@canonical.com
   contributors:
-  - name: admin
-    role: edit
   - name: noha@canonical.com
     role: edit
-  - name: manos@canonical.com
-    role: view
-  - name: orfeas@canonical.com
-    role: view
