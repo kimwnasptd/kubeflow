@@ -6,3 +6,7 @@ profiles:
   contributors:
   - name: noha@canonical.com
     role: edit
+- name: test
+  owner:
+    kind: user
+    name: admin
